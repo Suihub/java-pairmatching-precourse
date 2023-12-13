@@ -64,7 +64,7 @@ public class MatchController {
             pairCheckPrevious(course, level, mission);
         } catch (IllegalArgumentException exception) {
             System.out.println(exception.getMessage());
-            start();
+            pairCheck();
         }
     }
 
