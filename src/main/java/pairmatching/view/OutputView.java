@@ -1,5 +1,7 @@
 package pairmatching.view;
 
+import java.util.List;
+
 public class OutputView {
     public void printSelect() {
         System.out.println("기능을 선택하세요.");
@@ -19,5 +21,11 @@ public class OutputView {
         System.out.println("  - 레벨4: 성능개선 | 배포");
         System.out.println("  - 레벨5:");
         System.out.println("############################################");
+    }
+
+    public void printResult(List<String> matchingResult) {
+        System.out.println("페어 매칭 결과입니다.");
+        matchingResult.forEach(System.out::println);
+        System.out.println();
     }
 }

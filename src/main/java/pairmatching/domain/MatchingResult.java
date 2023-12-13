@@ -6,11 +6,13 @@ import java.util.List;
 public class MatchingResult {
     private final Course course;
     private final Level level;
+    private final Mission mission;
     private final List<Pairs> matching;
 
-    public MatchingResult(Course course, Level level) {
+    public MatchingResult(Course course, Level level, Mission mission) {
         this.course = course;
         this.level = level;
+        this.mission = mission;
         this.matching = new ArrayList<>();
     }
 
@@ -34,8 +36,8 @@ public class MatchingResult {
         return false;
     }
 
-    public boolean judgeCondition(Course course, Level level) {
-        return this.course == course && this.level == level;
+    public boolean judgeCondition(Course course, Level level, Mission mission) {
+        return this.course == course && this.level == level && this.mission == mission;
     }
 
     public List<String> writeMatchingResult() {

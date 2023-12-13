@@ -37,6 +37,18 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
+    public String inputRematch() {
+        System.out.println("매칭 정보가 있습니다. 다시 매칭하겠습니까?");
+        System.out.println("네 | 아니오");
+
+        String input = Console.readLine();
+
+        System.out.println();
+
+        rematchValidate(input);
+        return input;
+    }
+
     private void selectValidate(String input) {
         if (!validate.contains(input)) {
             throw new IllegalArgumentException("[ERROR] 선택지에 적힌 숫자 혹은 문자를 입력해주세요.");
@@ -45,6 +57,12 @@ public class InputView {
 
     private void scheduleValidate(List<String> schedule) {
         if (schedule.size() != 3) {
+            throw new IllegalArgumentException("[ERROR] 예시와 같이 입력해주세요.");
+        }
+    }
+
+    private void rematchValidate(String input) {
+        if (!input.equals("네") && input.equals("아니오")) {
             throw new IllegalArgumentException("[ERROR] 예시와 같이 입력해주세요.");
         }
     }

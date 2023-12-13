@@ -43,7 +43,45 @@ public class MatchController {
 
     private void pairMatch() {
         List<String> schedule = createSchedule();
-        createCrews(schedule);
+
+        try {
+            Course course = Course.CourseSetting(schedule.get(0));
+            Level level = Level.levelSetting(schedule.get(1));
+            Mission mission = Mission.missionSetting(level.getName(), schedule.get(2));
+            checkPrevious(course, level, mission);
+        } catch (IllegalArgumentException exception) {
+            System.out.println(exception.getMessage());
+            pairMatch();
+        }
+    }
+
+    private void checkPrevious(Course course, Level level, Mission mission) {
+        if (match != null && match.judgeCondition(course, level, mission)) {
+            checkReMatch(course, level, mission);
+            return;
+        }
+        createCrews(course, level, mission);
+    }
+
+    private void checkReMatch(Course course, Level level, Mission mission) {
+        String answer;
+        while (true) {
+            try {
+                 answer = input.inputRematch();
+                 break;
+            } catch (IllegalArgumentException exception) {
+                System.out.println(exception.getMessage());
+            }
+        }
+        reMatchResult(answer, course, level, mission);
+    }
+
+    private void reMatchResult(String answer, Course course, Level level, Mission mission) {
+        if (answer.equals("아니오")) {
+            pairMatch();
+            return;
+        }
+        createCrews(course, level, mission);
     }
 
     private List<String> createSchedule() {
@@ -59,20 +97,45 @@ public class MatchController {
         return schedule;
     }
 
-    private void createCrews(List<String> schedule) {
+    private void createCrews(Course course, Level level, Mission mission) {
+        Crews crews = new Crews(Course.getCrewNames(course), level);
+
+        if (match != null) {
+            proceedMatching(crews);
+            return;
+        }
+        match = new MatchingResult(course, level, mission);
+        match.plusResult(crews.pairMatching());
+        resultMathing();
+    }
+
+    private void proceedMatching(Crews crews) {
+        int count = 0;
+        while (count < 3) {
+            if (match.plusResult(crews.pairMatching())) {
+                break;
+            }
+            count += 1;
+        }
+
+        if (count == 3) {
+            reMatchFail();
+            return;
+        }
+        resultMathing();
+    }
+
+    private void reMatchFail() {
         try {
-            Course course = Course.CourseSetting(schedule.get(0));
-            Level level = Level.levelSetting(schedule.get(1));
-            Mission.missionSetting(level.getName(), schedule.get(2));
-            Crews crews = new Crews(Course.getCrewNames(course), level);
-            createMatching(crews);
+            throw new IllegalArgumentException("[ERROR] 페어 매칭에 실패했습니다.");
         } catch (IllegalArgumentException exception) {
             System.out.println(exception.getMessage());
-            pairMatch();
+            start();
         }
     }
 
-    private void createMatching(Crews crews) {
-        Pairs pairs = crews.pairMatching();
+    private void resultMathing() {
+        output.printResult(match.writeMatchingResult());
+        start();
     }
 }
