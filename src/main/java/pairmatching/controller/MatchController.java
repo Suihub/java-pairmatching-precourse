@@ -12,7 +12,21 @@ public class MatchController {
         this.output = output;
     }
 
-    public void run() {
+    public void start() {
+        String select;
+        while (true) {
+            try {
+                output.printSelect();
+                select = input.inputSelect();
+                break;
+            } catch (IllegalArgumentException exception) {
+                System.out.println(exception.getMessage());
+            }
+        }
+        proceed(select);
+    }
+
+    private void proceed(String select) {
 
     }
 }
