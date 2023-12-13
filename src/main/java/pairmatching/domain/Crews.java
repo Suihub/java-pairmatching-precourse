@@ -1,5 +1,7 @@
 package pairmatching.domain;
 
+import camp.nextstep.edu.missionutils.Randoms;
+
 import java.util.List;
 
 public class Crews {
@@ -9,5 +11,9 @@ public class Crews {
     public Crews(List<String> crewNames, Level level) {
         this.crewNames = crewNames;
         this.level = level;
+    }
+
+    private List<String> shuffleNames() {
+        return Randoms.shuffle(crewNames);
     }
 }
