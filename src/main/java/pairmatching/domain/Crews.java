@@ -35,11 +35,11 @@ public class Crews {
 
         for (int i = 0; i < crews.size(); i+=2) {
             if (crews.size() - i == 3) {
-                Pair pair = new Pair(crews.subList(i, i + 2));
+                Pair pair = new Pair(crews.subList(i, i + 3));
                 pairs.add(pair);
                 break;
             }
-            Pair pair = new Pair(crews.subList(i, i + 1));
+            Pair pair = new Pair(crews.subList(i, i + 2));
             pairs.add(pair);
         }
         return pairs;
