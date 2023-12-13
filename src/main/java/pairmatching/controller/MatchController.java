@@ -1,9 +1,6 @@
 package pairmatching.controller;
 
-import pairmatching.domain.Course;
-import pairmatching.domain.Crews;
-import pairmatching.domain.Level;
-import pairmatching.domain.Mission;
+import pairmatching.domain.*;
 import pairmatching.view.InputView;
 import pairmatching.view.OutputView;
 
@@ -12,6 +9,7 @@ import java.util.List;
 public class MatchController {
     private final InputView input;
     private final OutputView output;
+    private MatchingResult match;
 
     public MatchController(InputView input, OutputView output) {
         this.input = input;
@@ -67,9 +65,14 @@ public class MatchController {
             Level level = Level.levelSetting(schedule.get(1));
             Mission.missionSetting(level.getName(), schedule.get(2));
             Crews crews = new Crews(Course.getCrewNames(course), level);
+            createMatching(crews);
         } catch (IllegalArgumentException exception) {
             System.out.println(exception.getMessage());
             pairMatch();
         }
+    }
+
+    private void createMatching(Crews crews) {
+        Pairs pairs = crews.pairMatching();
     }
 }
