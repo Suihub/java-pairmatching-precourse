@@ -35,10 +35,43 @@ public class MatchController {
             scheduleAnnounce();
             pairMatch();
         }
+        if (select.equals("2")) {
+            scheduleAnnounce();
+            pairCheck();
+        }
+        if (select.equals("3")) {
+            matchDelete();
+        }
+    }
+
+    private void matchDelete() {
+        match = null;
+        start();
     }
 
     private void scheduleAnnounce() {
         output.printSchedule();
+    }
+
+    private void pairCheck() {
+        List<String> schedule = createSchedule();
+
+        try {
+            Course course = Course.CourseSetting(schedule.get(0));
+            Level level = Level.levelSetting(schedule.get(1));
+            Mission mission = Mission.missionSetting(level.getName(), schedule.get(2));
+            pairCheckPrevious(course, level, mission);
+        } catch (IllegalArgumentException exception) {
+            System.out.println(exception.getMessage());
+            pairCheck();
+        }
+    }
+
+    private void pairCheckPrevious(Course course, Level level, Mission mission) {
+        if (match == null || match.judgeCondition(course, level, mission)) {
+            throw new IllegalArgumentException("[ERROR] 매칭 이력이 없습니다.");
+        }
+        resultMathing();
     }
 
     private void pairMatch() {

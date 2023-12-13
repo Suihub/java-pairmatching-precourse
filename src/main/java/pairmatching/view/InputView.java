@@ -20,6 +20,7 @@ public class InputView {
 
     public String inputSelect() {
         String input = Console.readLine();
+        System.out.println();
         selectValidate(input);
         return input;
     }
@@ -29,6 +30,7 @@ public class InputView {
         System.out.println("ex) 백엔드, 레벨1, 자동차경주");
 
         List<String> schedule = Arrays.asList(Console.readLine().split(","));
+        System.out.println();
 
         scheduleValidate(schedule);
 
