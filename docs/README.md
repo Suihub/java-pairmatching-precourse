@@ -54,5 +54,13 @@
 - [ ] 존재하지 미션인지를 검증한다.
 
 ## Controller
+### MatchController
 - [ ] 기능을 입력받아 이를 제어한다.
+
+## View
+### InputView
+- [ ] 입력 기능을 총괄한다.
+
+### OutputView
+- [ ] 출력 기능을 총괄한다.
 
