@@ -28,4 +28,10 @@ public class OutputView {
         matchingResult.forEach(System.out::println);
         System.out.println();
     }
+
+    public void printInit() {
+        System.out.println();
+        System.out.println("초기화되었습니다.");
+        System.out.println();
+    }
 }

@@ -46,6 +46,7 @@ public class MatchController {
 
     private void matchDelete() {
         match = null;
+        output.printInit();
         start();
     }
 
