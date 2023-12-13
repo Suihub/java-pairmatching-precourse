@@ -1,5 +1,8 @@
 package pairmatching.controller;
 
+import pairmatching.domain.Course;
+import pairmatching.domain.Level;
+import pairmatching.domain.Mission;
 import pairmatching.view.InputView;
 import pairmatching.view.OutputView;
 
@@ -30,12 +33,21 @@ public class MatchController {
 
     private void proceed(String select) {
         if (select.equals("1")) {
+            scheduleAnnounce();
             pairMatch();
         }
     }
 
-    private void pairMatch() {
+    private void scheduleAnnounce() {
         output.printSchedule();
+    }
+
+    private void pairMatch() {
+        List<String> schedule = createSchedule();
+        createPair(schedule);
+    }
+
+    private List<String> createSchedule() {
         List<String> schedule;
         while (true) {
             try {
@@ -45,9 +57,17 @@ public class MatchController {
                 System.out.println(exception.getMessage());
             }
         }
-        createPair(schedule);
+        return schedule;
     }
 
     private void createPair(List<String> schedule) {
+        try {
+            Course course = Course.CourseSetting(schedule.get(0));
+            Level level = Level.levelSetting(schedule.get(1));
+            Mission.missionSetting(level.getName(), schedule.get(2));
+        } catch (IllegalArgumentException exception) {
+            System.out.println(exception.getMessage());
+            pairMatch();
+        }
     }
 }
