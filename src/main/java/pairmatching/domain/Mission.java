@@ -27,9 +27,7 @@ public enum Mission {
                 .filter(mission -> mission.name.equals(missionName))
                 .findAny();
 
-        return result.orElseThrow(() -> {
-            throw new IllegalArgumentException("[ERROR] 해당 레벨에 존재하지 않는 미션입니다.");
-        });
+        return result.orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 레벨에 존재하지 않는 미션입니다."));
     }
 
     public String getName() {

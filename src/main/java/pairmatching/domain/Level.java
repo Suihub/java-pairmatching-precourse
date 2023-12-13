@@ -1,6 +1,7 @@
 package pairmatching.domain;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Optional;
 
 public enum Level {
@@ -20,12 +21,10 @@ public enum Level {
         validate(input);
 
         Optional<Level> result = Arrays.stream(Level.values())
-                .filter(level -> level.name == input)
+                .filter(level -> Objects.equals(level.name, input))
                 .findAny();
 
-        return result.orElseThrow(() -> {
-            throw new IllegalArgumentException("[ERROR] 존재하지 않는 레벨입니다.");
-        });
+        return result.orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 레벨입니다."));
     }
 
     public String getName() {

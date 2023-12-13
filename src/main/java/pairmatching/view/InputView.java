@@ -3,7 +3,9 @@ package pairmatching.view;
 import camp.nextstep.edu.missionutils.Console;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class InputView {
     private final List<String> validate;
@@ -22,9 +24,28 @@ public class InputView {
         return input;
     }
 
+    public List<String> inputSchedule() {
+        System.out.println("과정, 레벨, 미션을 선택하세요");
+        System.out.println("ex) 백엔드, 레벨1, 자동차경주");
+
+        List<String> schedule = Arrays.asList(Console.readLine().split(","));
+
+        scheduleValidate(schedule);
+
+        return schedule.stream()
+                .map(String::trim)
+                .collect(Collectors.toList());
+    }
+
     private void selectValidate(String input) {
         if (!validate.contains(input)) {
             throw new IllegalArgumentException("[ERROR] 선택지에 적힌 숫자 혹은 문자를 입력해주세요.");
+        }
+    }
+
+    private void scheduleValidate(List<String> schedule) {
+        if (schedule.size() != 3) {
+            throw new IllegalArgumentException("[ERROR] 예시와 같이 입력해주세요.");
         }
     }
 }
